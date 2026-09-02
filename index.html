@@ -188,7 +188,7 @@ Details: ${s.message.trim()}`:"");window.open(nm(Me),"_blank","noopener,noreferr
       var name=v("field-name"),email=v("field-email"),phone=v("field-phone"),city=v("field-city"),message=v("field-message"),source=v("field-source");
       var service=rc("service"),frequency=rc("frequency"),urgency=rc("urgency");
       if(!name||!email||!phone||!city||!service||!frequency||!urgency||digits(phone).length<10){return;}
-      ev.preventDefault();ev.stopImmediatePropagation();
+      ev.preventDefault();ev.stopImmediatePropagation();var __wa="https://wa.me/17813506209?text="+encodeURIComponent("Hi C&C Cleaning! I would like a free estimate.\n\nName: "+name+"\nPhone: "+phone+"\nEmail: "+email+"\nTown: "+city+"\nService: "+service+"\nHow often: "+frequency+"\nWhen: "+urgency+(message?"\nDetails: "+message:""));try{window.open(__wa,"_blank","noopener");}catch(e){}
       var body={access_key:KEY,subject:"New estimate request - C&C Cleaning ("+name+")",from_name:"C&C Cleaning Website",name:name,email:email,phone:phone,town:city,service:service,how_often:frequency,when:urgency,heard_via:source,message:message,botcheck:false};
       var btn=f.querySelector('button[type="submit"]');var old=btn?btn.textContent:"";if(btn){btn.disabled=true;btn.textContent="Sending...";}
       fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(body)})
