@@ -181,30 +181,24 @@ Details: ${s.message.trim()}`:"");window.open(nm(Me),"_blank","noopener,noreferr
     var f=document.querySelector("form");
     if(!f){return false;}
     if(f.getAttribute("data-w3")==="1"){return true;}
-    f.setAttribute("data-w3","1");try{var _b=f.querySelector('button[type="submit"]');if(_b&&!f.querySelector("[data-wa-note]")){var _n=document.createElement("p");_n.setAttribute("data-wa-note","1");_n.textContent="You will be taken to WhatsApp to send your request to our team.";_n.style.cssText="margin:.85rem 0 0;font-size:.8rem;text-align:center;color:#c8c1b4;opacity:.9;";_b.insertAdjacentElement("afterend",_n);}}catch(e){}
+    f.setAttribute("data-w3","1");
     f.addEventListener("submit",function(ev){
       var hp=f.querySelector('input[name="botcheck"]');
       if(hp&&hp.checked){return;}
       var name=v("field-name"),email=v("field-email"),phone=v("field-phone"),city=v("field-city"),message=v("field-message"),source=v("field-source");
       var service=rc("service"),frequency=rc("frequency"),urgency=rc("urgency");
       if(!name||!email||!phone||!city||!service||!frequency||!urgency||digits(phone).length<10){return;}
-      ev.preventDefault();ev.stopImmediatePropagation();var __wa="https://wa.me/17813506209?text="+encodeURIComponent("Hi C&C Cleaning! I would like a free estimate.\n\nName: "+name+"\nPhone: "+phone+"\nEmail: "+email+"\nTown: "+city+"\nService: "+service+"\nHow often: "+frequency+"\nWhen: "+urgency+(message?"\nDetails: "+message:""));try{window.open(__wa,"_blank","noopener");}catch(e){}var btn=f.querySelector('button[type="submit"]');if(btn){btn.textContent="Sent!";btn.disabled=true;}try{f.reset();}catch(e){}alert("Thanks! We are opening WhatsApp so you can send your request to (781) 350-6209.");return;
+      ev.preventDefault();ev.stopImmediatePropagation();
       var body={access_key:KEY,subject:"New estimate request - C&C Cleaning ("+name+")",from_name:"C&C Cleaning Website",name:name,email:email,phone:phone,town:city,service:service,how_often:frequency,when:urgency,heard_via:source,message:message,botcheck:false};
       var btn=f.querySelector('button[type="submit"]');var old=btn?btn.textContent:"";if(btn){btn.disabled=true;btn.textContent="Sending...";}
       fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(body)})
         .then(function(res){return res.json().then(function(d){return {ok:res.ok,d:d};});})
         .then(function(o){
           if(o.ok&&o.d&&o.d.success){
-            if(btn){btn.textContent="Sent!";btn.disabled=true;}try{f.reset();}catch(e){}alert("Thank you! Your request was sent. We will call you shortly at (781) 350-6209.");
-          }else{
-            if(btn){btn.disabled=false;btn.textContent=old;}
-            alert("Sorry, we could not send your request. Please call (781) 350-6209.");
-          }
+            if(btn){btn.textContent="Sent!";btn.disabled=true;}try{f.reset();}catch(e){}alert("Thank you! Your request was sent. We will get back to you shortly.");
+          }else{ if(btn){btn.disabled=false;btn.textContent=old;} alert("Sorry, we could not send your request. Please call (781) 350-6209."); }
         })
-        .catch(function(){
-          if(btn){btn.disabled=false;btn.textContent=old;}
-          alert("Network error. Please call (781) 350-6209.");
-        });
+        .catch(function(){ if(btn){btn.disabled=false;btn.textContent=old;} alert("Network error. Please call (781) 350-6209."); });
     },true);
     return true;
   }
